@@ -11,10 +11,10 @@ const Footer = () => {
               <div className="w-10 h-10 bg-background rounded-xl flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-foreground" />
               </div>
-              <span className="font-display text-2xl font-semibold text-background">Luvia AI</span>
+              <span className="font-display text-2xl font-semibold text-background">Rewear AI</span>
             </div>
             <p className="text-background/60 max-w-sm leading-relaxed">
-              Your AI-powered fashion assistant. Discover your style, love your wardrobe, and embrace sustainable fashion.
+              Your AI-powered fashion assistant. Rewear what you love, style with intention, and embrace sustainable fashion.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-background/40 text-sm">
-            © 2024 Luvia AI. All rights reserved.
+            © 2024 Rewear AI. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <a href="#" className="text-background/40 hover:text-background transition-colors">

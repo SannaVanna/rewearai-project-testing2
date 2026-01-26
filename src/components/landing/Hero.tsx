@@ -61,7 +61,7 @@ const Hero = ({ onGetStarted }: HeroProps) => {
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-3xl blur-2xl transform rotate-3" />
             <img 
               src={heroImage} 
-              alt="Luvia AI Fashion" 
+              alt="Rewear AI Fashion"
               className="relative rounded-3xl shadow-medium w-full max-w-lg mx-auto object-cover aspect-[4/5]"
             />
             

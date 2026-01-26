@@ -17,7 +17,7 @@ const Header = ({ onGetStarted }: HeaderProps) => {
           <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-background" />
           </div>
-          <span className="font-display text-2xl font-semibold text-foreground">Luvia AI</span>
+          <span className="font-display text-2xl font-semibold text-foreground">Rewear AI</span>
         </div>
 
         {/* Desktop Navigation */}
