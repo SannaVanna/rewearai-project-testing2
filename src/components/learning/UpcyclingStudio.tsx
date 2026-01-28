@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Leaf, Clock, Sparkles, Check, ChevronRight, ArrowLeft } from "lucide-react";
+import { Leaf, Clock, Sparkles, Check, ChevronRight, ArrowLeft, Lightbulb } from "lucide-react";
 import confetti from "canvas-confetti";
 
 interface Tutorial {
@@ -76,6 +76,16 @@ const tutorials: Tutorial[] = [
   }
 ];
 
+const ecoTips = [
+  "The 30-wear rule: Before buying, ask if you'll wear it at least 30 times. If not, skip it!",
+  "Washing clothes at 30°C instead of 40°C uses 40% less energy per wash cycle.",
+  "Air drying extends garment life by 50% compared to tumble drying.",
+  "One white cotton t-shirt takes 2,700 liters of water to produce — enough for one person to drink for 2.5 years.",
+  "Buying secondhand clothing reduces its carbon footprint by 82%.",
+  "Storing clothes properly (folded knits, hung wovens) extends their lifespan significantly.",
+  "Spot cleaning small stains instead of full washes saves water and preserves fabric.",
+];
+
 const difficultyColors = {
   Easy: "bg-green-100 text-green-700",
   Medium: "bg-amber-100 text-amber-700",
@@ -90,6 +100,13 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
   const [selectedTutorial, setSelectedTutorial] = useState<Tutorial | null>(null);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [projectCompleted, setProjectCompleted] = useState(false);
+  const [dailyTip, setDailyTip] = useState("");
+
+  // Set daily tip based on day of year for consistency
+  useEffect(() => {
+    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+    setDailyTip(ecoTips[dayOfYear % ecoTips.length]);
+  }, []);
 
   const handleStepToggle = (index: number) => {
     setCompletedSteps(prev => 
@@ -143,6 +160,23 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               Transform your old clothes into something new. Simple DIY projects that give your wardrobe a second life.
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Eco Tip of the Day */}
+      <div className="container max-w-4xl px-4 mb-8">
+        <div className="p-5 bg-sage-light rounded-2xl border border-sage/20 animate-fade-up">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-sage/20 rounded-xl flex items-center justify-center shrink-0">
+              <Lightbulb className="w-5 h-5 text-sage" />
+            </div>
+            <div>
+              <p className="text-sage-foreground font-medium mb-1">Eco Tip of the Day</p>
+              <p className="text-sage-foreground/80 text-sm leading-relaxed">
+                {dailyTip}
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -13,19 +13,22 @@ import {
   BookOpen,
   Heart,
   Recycle,
-  BarChart3
+  BarChart3,
+  MessageCircle
 } from "lucide-react";
 import wardrobeImage from "@/assets/wardrobe-preview.jpg";
 import SDGBadge from "@/components/sustainability/SDGBadge";
 import ImpactTracker from "@/components/sustainability/ImpactTracker";
 import DonationHub from "@/components/sustainability/DonationHub";
 import FavoriteOutfits from "@/components/wardrobe/FavoriteOutfits";
+import AIAssistant from "@/components/assistant/AIAssistant";
 
 // Quick action buttons for AI Stylist section
 const aiStylistActions = [
   { id: "tryon", icon: Camera, label: "Try-On", color: "bg-primary/10 text-primary" },
   { id: "generator", icon: Wand2, label: "Get Styled", color: "bg-accent/10 text-accent" },
   { id: "wardrobe", icon: Shirt, label: "Wardrobe", color: "bg-secondary text-foreground" },
+  { id: "assistant", icon: MessageCircle, label: "AI Tips", color: "bg-primary/10 text-primary" },
 ];
 
 // Quick actions for Sustainability Hub
@@ -56,12 +59,15 @@ interface DashboardProps {
 const Dashboard = ({ onNavigate }: DashboardProps) => {
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [impactModalOpen, setImpactModalOpen] = useState(false);
+  const [assistantModalOpen, setAssistantModalOpen] = useState(false);
 
   const handleQuickAction = (actionId: string) => {
     if (actionId === "donate") {
       setDonationModalOpen(true);
     } else if (actionId === "impact") {
       setImpactModalOpen(true);
+    } else if (actionId === "assistant") {
+      setAssistantModalOpen(true);
     } else if (actionId === "learning" || actionId === "upcycle") {
       onNavigate("learning");
     } else if (actionId === "tryon" || actionId === "generator") {
@@ -135,7 +141,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {aiStylistActions.map((action) => (
                 <button
                   key={action.id}
@@ -316,6 +322,13 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
             Your Sustainability Impact
           </h2>
           <ImpactTracker />
+        </DialogContent>
+      </Dialog>
+
+      {/* AI Assistant Modal */}
+      <Dialog open={assistantModalOpen} onOpenChange={setAssistantModalOpen}>
+        <DialogContent className="sm:max-w-lg p-0 overflow-hidden">
+          <AIAssistant onClose={() => setAssistantModalOpen(false)} />
         </DialogContent>
       </Dialog>
     </div>
