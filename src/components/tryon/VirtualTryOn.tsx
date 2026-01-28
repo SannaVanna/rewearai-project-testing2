@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Camera, Upload, Sparkles, RefreshCw, Heart, Share2, ChevronLeft, ChevronRight, User, Shield } from "lucide-react";
+import { Camera, Upload, Sparkles, RefreshCw, Heart, Share2, ChevronLeft, ChevronRight, User, Shield, Recycle, Gift } from "lucide-react";
 import tryonImage from "@/assets/tryon-preview.jpg";
 
 const sampleOutfits = [
@@ -256,13 +256,26 @@ const VirtualTryOn = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <Button variant="hero" size="lg" className="flex-1">
-                    Save Outfit
-                  </Button>
-                  <Button variant="outline" size="lg" className="flex-1" onClick={resetUpload}>
-                    Try Another
-                  </Button>
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-3">
+                    <Button variant="hero" size="lg" className="flex-1">
+                      <Heart className="w-4 h-4 mr-2" />
+                      Save to Favorites
+                    </Button>
+                    <Button variant="outline" size="lg" className="flex-1" onClick={resetUpload}>
+                      Try Another
+                    </Button>
+                  </div>
+                  <div className="flex gap-3">
+                    <Button variant="elegant" size="default" className="flex-1 text-sage border-sage hover:bg-sage hover:text-sage-foreground">
+                      <Recycle className="w-4 h-4 mr-2" />
+                      Upcycle Item
+                    </Button>
+                    <Button variant="elegant" size="default" className="flex-1 text-sage border-sage hover:bg-sage hover:text-sage-foreground">
+                      <Gift className="w-4 h-4 mr-2" />
+                      Donate Item
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}

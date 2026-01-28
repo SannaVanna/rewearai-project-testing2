@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/landing/Header";
 import Hero from "@/components/landing/Hero";
 import Features from "@/components/landing/Features";
@@ -17,10 +17,26 @@ import MainNav from "@/components/layout/MainNav";
 
 type Screen = "landing" | "onboarding" | "wardrobe-upload" | "wardrobe" | "tryon" | "dashboard" | "learning" | "profile";
 
+const AUTH_STORAGE_KEY = "rewear_auth_state";
+
 const Index = () => {
-  const [currentScreen, setCurrentScreen] = useState<Screen>("landing");
+  // Check for returning user on mount
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+    return stored === "true";
+  });
+  
+  const [currentScreen, setCurrentScreen] = useState<Screen>(() => {
+    const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+    return stored === "true" ? "dashboard" : "landing";
+  });
+  
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Persist auth state
+  useEffect(() => {
+    localStorage.setItem(AUTH_STORAGE_KEY, isLoggedIn ? "true" : "false");
+  }, [isLoggedIn]);
 
   const handleGetStarted = () => {
     setAuthModalOpen(true);

@@ -6,7 +6,7 @@ interface MainNavProps {
 }
 
 const navItems = [
-  { id: "landing", label: "Home", icon: Home },
+  { id: "dashboard", label: "Home", icon: Home },
   { id: "wardrobe", label: "Wardrobe", icon: Shirt },
   { id: "learning", label: "Learning", icon: BookOpen },
   { id: "profile", label: "Profile", icon: User },
@@ -18,7 +18,7 @@ const MainNav = ({ currentScreen, onNavigate }: MainNavProps) => {
       <div className="container flex items-center justify-between h-16 px-4">
         {/* Logo */}
         <button 
-          onClick={() => onNavigate("landing")}
+          onClick={() => onNavigate("dashboard")}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
           <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
@@ -33,7 +33,7 @@ const MainNav = ({ currentScreen, onNavigate }: MainNavProps) => {
         <nav className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = currentScreen === item.id || 
-              (item.id === "landing" && currentScreen === "landing");
+              (item.id === "dashboard" && currentScreen === "dashboard");
             return (
               <button
                 key={item.id}
@@ -54,7 +54,7 @@ const MainNav = ({ currentScreen, onNavigate }: MainNavProps) => {
         <nav className="md:hidden flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = currentScreen === item.id || 
-              (item.id === "landing" && currentScreen === "landing");
+              (item.id === "dashboard" && currentScreen === "dashboard");
             return (
               <button
                 key={item.id}
