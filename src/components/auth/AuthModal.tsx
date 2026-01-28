@@ -51,7 +51,7 @@ const AuthModal = ({ isOpen, onClose, onSuccess }: AuthModalProps) => {
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="font-display text-3xl font-semibold text-foreground mb-2">
-            {mode === "login" ? "Welcome Back" : "Join Luvia AI"}
+            {mode === "login" ? "Welcome Back" : "Join Rewear AI"}
           </h2>
           <p className="text-muted-foreground">
             {mode === "login" 

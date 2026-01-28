@@ -46,7 +46,7 @@ const Sustainability = () => {
             <p className="font-display text-2xl md:text-3xl italic text-foreground/80 mb-4">
               The most sustainable outfit is the one already in your closet.
             </p>
-            <cite className="text-muted-foreground not-italic">— Luvia AI Philosophy</cite>
+            <cite className="text-muted-foreground not-italic">— Rewear AI Philosophy</cite>
           </blockquote>
         </div>
       </div>
