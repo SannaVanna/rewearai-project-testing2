@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Package, MapPin, CheckCircle, ChevronRight } from "lucide-react";
+import { Heart, Package, MapPin, CheckCircle, ChevronRight, Map } from "lucide-react";
+import DonationMap from "./DonationMap";
 
 const charityPartners = [
   { id: "oxfam", name: "Oxfam", description: "Supporting communities worldwide", logo: "🌍" },
@@ -15,7 +16,7 @@ interface DonationHubProps {
 
 const DonationHub = ({ onClose }: DonationHubProps) => {
   const [selectedCharity, setSelectedCharity] = useState<string | null>(null);
-  const [step, setStep] = useState<"select" | "items" | "confirm" | "success">("select");
+  const [step, setStep] = useState<"select" | "items" | "confirm" | "success" | "map">("select");
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const mockWardrobeItems = [
@@ -35,6 +36,21 @@ const DonationHub = ({ onClose }: DonationHubProps) => {
   const handleConfirmDonation = () => {
     setStep("success");
   };
+
+  if (step === "map") {
+    return (
+      <div className="space-y-4">
+        <DonationMap />
+        <Button 
+          variant="outline" 
+          className="w-full"
+          onClick={() => setStep("select")}
+        >
+          Back to Charity Selection
+        </Button>
+      </div>
+    );
+  }
 
   if (step === "success") {
     return (
@@ -224,12 +240,16 @@ const DonationHub = ({ onClose }: DonationHubProps) => {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 p-3 bg-muted rounded-xl">
-        <MapPin className="w-4 h-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground">
-          Free pickup available in your area
+      <button 
+        className="flex items-center gap-2 p-3 bg-muted rounded-xl w-full hover:bg-muted/80 transition-colors"
+        onClick={() => setStep("map")}
+      >
+        <Map className="w-4 h-4 text-muted-foreground" />
+        <span className="text-sm text-muted-foreground flex-1 text-left">
+          Find donation centers near you
         </span>
-      </div>
+        <ChevronRight className="w-4 h-4 text-muted-foreground" />
+      </button>
 
       <Button 
         className="w-full bg-sage hover:bg-sage/90 text-sage-foreground"

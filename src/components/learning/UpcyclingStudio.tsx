@@ -16,62 +16,68 @@ interface Tutorial {
 const tutorials: Tutorial[] = [
   {
     id: "1",
-    title: "Denim to Tote",
-    difficulty: "Medium",
-    time: "45m",
-    icon: "👜",
+    title: "Raw-Edge Denim Shorts",
+    difficulty: "Easy",
+    time: "10m",
+    icon: "👖",
     steps: [
-      "Cut legs off old jeans.",
-      "Turn inside out and sew bottom edge.",
-      "Use excess fabric for straps."
+      "Lay jeans flat and mark desired length.",
+      "Cut straight across both legs.",
+      "Fray edges with scissors or by washing."
     ]
   },
   {
     id: "2",
-    title: "T-Shirt to Crop Top",
+    title: "No-Sew Tie-Front Crop",
     difficulty: "Easy",
     time: "15m",
     icon: "👕",
     steps: [
-      "Lay flat.",
-      "Measure to waist.",
-      "Cut straight across (no-sew)."
+      "Cut t-shirt to desired crop length.",
+      "Cut vertical slits along the bottom hem.",
+      "Tie slits into knots for a finished look."
     ]
   },
   {
     id: "3",
-    title: "Sweater to Mittens",
-    difficulty: "Easy",
-    time: "30m",
-    icon: "🧤",
+    title: "T-Shirt Fringe Tote",
+    difficulty: "Medium",
+    time: "20m",
+    icon: "👜",
     steps: [
-      "Trace hand on sweater.",
-      "Cut slightly outside outline.",
-      "Stitch edges together."
+      "Cut sleeves and neckline off the t-shirt.",
+      "Turn inside out and cut fringe along the bottom.",
+      "Tie fringe pieces together to close the bottom.",
+      "Flip right-side out—your tote is ready!"
     ]
   },
   {
     id: "4",
-    title: "Dress to Two-Piece Set",
+    title: "Maxi-to-Skirt",
     difficulty: "Advanced",
-    time: "60m",
+    time: "45m",
     icon: "👗",
     steps: [
-      "Cut at waistline.",
-      "Hem the top.",
-      "Add elastic to skirt waistband."
+      "Lay maxi dress flat and mark where you want the skirt to start.",
+      "Cut off the top portion carefully.",
+      "Fold the raw edge and sew an elastic waistband channel.",
+      "Thread elastic through and secure the ends.",
+      "Try on and adjust fit as needed."
     ]
   },
   {
     id: "5",
-    title: "Silk Scarf to Halter Top",
-    difficulty: "Easy",
-    time: "10m",
-    icon: "🧣",
+    title: "Menswear Shirt-Dress",
+    difficulty: "Advanced",
+    time: "60m",
+    icon: "👔",
     steps: [
-      "Fold scarf into a triangle.",
-      "Tie around neck.",
-      "Tie ends around waist."
+      "Select an oversized men's button-down shirt.",
+      "Try on and mark desired dress length.",
+      "Add a belt or sew darts at the waist for shape.",
+      "Hem the bottom edge.",
+      "Optional: Roll sleeves and add cuffs.",
+      "Style with accessories for a polished look."
     ]
   }
 ];
