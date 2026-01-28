@@ -8,14 +8,19 @@ import Footer from "@/components/landing/Footer";
 import AuthModal from "@/components/auth/AuthModal";
 import StylePreferences from "@/components/onboarding/StylePreferences";
 import WardrobeUpload from "@/components/wardrobe/WardrobeUpload";
+import WardrobePage from "@/components/wardrobe/WardrobePage";
 import VirtualTryOn from "@/components/tryon/VirtualTryOn";
 import Dashboard from "@/components/dashboard/Dashboard";
+import UpcyclingStudio from "@/components/learning/UpcyclingStudio";
+import ProfilePage from "@/components/profile/ProfilePage";
+import MainNav from "@/components/layout/MainNav";
 
-type Screen = "landing" | "onboarding" | "wardrobe" | "tryon" | "dashboard";
+type Screen = "landing" | "onboarding" | "wardrobe-upload" | "wardrobe" | "tryon" | "dashboard" | "learning" | "profile";
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>("landing");
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleGetStarted = () => {
     setAuthModalOpen(true);
@@ -23,12 +28,13 @@ const Index = () => {
 
   const handleAuthSuccess = () => {
     setAuthModalOpen(false);
+    setIsLoggedIn(true);
     setCurrentScreen("onboarding");
   };
 
   const handleStyleComplete = (styles: string[]) => {
     console.log("Selected styles:", styles);
-    setCurrentScreen("wardrobe");
+    setCurrentScreen("wardrobe-upload");
   };
 
   const handleWardrobeComplete = () => {
@@ -39,24 +45,64 @@ const Index = () => {
     setCurrentScreen(screen as Screen);
   };
 
+  // Show navigation for logged-in screens
+  const showMainNav = isLoggedIn && !["onboarding", "wardrobe-upload"].includes(currentScreen);
+
   // Render based on current screen
   if (currentScreen === "onboarding") {
     return <StylePreferences onComplete={handleStyleComplete} />;
   }
 
-  if (currentScreen === "wardrobe") {
+  if (currentScreen === "wardrobe-upload") {
     return <WardrobeUpload onComplete={handleWardrobeComplete} />;
   }
 
   if (currentScreen === "tryon") {
-    return <VirtualTryOn />;
+    return (
+      <>
+        {showMainNav && <MainNav currentScreen={currentScreen} onNavigate={handleNavigate} />}
+        <VirtualTryOn />
+      </>
+    );
+  }
+
+  if (currentScreen === "wardrobe") {
+    return (
+      <>
+        {showMainNav && <MainNav currentScreen={currentScreen} onNavigate={handleNavigate} />}
+        <WardrobePage onNavigate={handleNavigate} />
+      </>
+    );
+  }
+
+  if (currentScreen === "learning") {
+    return (
+      <>
+        {showMainNav && <MainNav currentScreen={currentScreen} onNavigate={handleNavigate} />}
+        <UpcyclingStudio />
+      </>
+    );
+  }
+
+  if (currentScreen === "profile") {
+    return (
+      <>
+        {showMainNav && <MainNav currentScreen={currentScreen} onNavigate={handleNavigate} />}
+        <ProfilePage onNavigate={handleNavigate} />
+      </>
+    );
   }
 
   if (currentScreen === "dashboard") {
-    return <Dashboard onNavigate={handleNavigate} />;
+    return (
+      <>
+        {showMainNav && <MainNav currentScreen={currentScreen} onNavigate={handleNavigate} />}
+        <Dashboard onNavigate={handleNavigate} />
+      </>
+    );
   }
 
-  // Landing page
+  // Landing page (no nav, use original header)
   return (
     <div className="min-h-screen">
       <Header onGetStarted={handleGetStarted} />
