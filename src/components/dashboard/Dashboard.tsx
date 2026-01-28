@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   Sparkles, 
@@ -9,23 +8,34 @@ import {
   TrendingUp, 
   Plus,
   Sun,
-  CloudSun,
-  ChevronRight
+  Cloud,
+  CloudRain,
+  Thermometer,
+  ChevronRight,
+  Wind
 } from "lucide-react";
 import wardrobeImage from "@/assets/wardrobe-preview.jpg";
 
 const quickActions = [
   { icon: Camera, label: "Try On", color: "bg-primary/10 text-primary" },
   { icon: Shirt, label: "Wardrobe", color: "bg-accent/10 text-accent" },
-  { icon: Calendar, label: "Plan Week", color: "bg-green-100 text-green-700" },
+  { icon: Calendar, label: "Plan Week", color: "bg-green-100/80 text-green-700" },
   { icon: Plus, label: "Add Clothes", color: "bg-secondary text-foreground" },
 ];
 
 const outfitSuggestions = [
-  { id: 1, occasion: "Today's Look", weather: "Sunny, 72°F", items: 3 },
-  { id: 2, occasion: "Work Meeting", weather: "Business casual", items: 4 },
-  { id: 3, occasion: "Weekend Brunch", weather: "Relaxed", items: 3 },
+  { id: 1, occasion: "Work Meeting", style: "Business casual", items: 4 },
+  { id: 2, occasion: "Weekend Brunch", style: "Relaxed chic", items: 3 },
+  { id: 3, occasion: "Date Night", style: "Elegant", items: 3 },
 ];
+
+// Weather-aware styling data
+const weatherData = {
+  temp: 28,
+  condition: "sunny",
+  humidity: 45,
+  recommendation: "It's 28°C and sunny — here's a breathable outfit from your wardrobe."
+};
 
 interface DashboardProps {
   onNavigate: (screen: string) => void;
@@ -35,7 +45,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <header className="bg-gradient-to-b from-secondary/50 to-background pt-12 pb-8 px-4">
+      <header className="bg-gradient-to-b from-secondary/50 to-background pt-8 pb-6 px-4">
         <div className="container">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -47,14 +57,31 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
             </div>
           </div>
 
-          {/* Weather card */}
-          <div className="bg-card rounded-2xl p-4 shadow-soft flex items-center gap-4">
-            <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
-              <Sun className="w-6 h-6 text-amber-600" />
+          {/* Weather-Aware Styling Radar */}
+          <div className="bg-card rounded-2xl p-5 shadow-soft border border-border/50">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
+                <Sun className="w-7 h-7 text-amber-500" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">AI Styling Radar</span>
+                </div>
+                <p className="font-display text-lg font-medium text-foreground leading-snug">
+                  {weatherData.recommendation}
+                </p>
+              </div>
             </div>
-            <div className="flex-1">
-              <p className="font-medium text-foreground">Perfect day for light layers</p>
-              <p className="text-sm text-muted-foreground">72°F • Sunny with clouds</p>
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Thermometer className="w-4 h-4" />
+                <span>{weatherData.temp}°C</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Wind className="w-4 h-4" />
+                <span>{weatherData.humidity}% humidity</span>
+              </div>
             </div>
           </div>
         </div>
@@ -108,9 +135,14 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
           </div>
         </section>
 
-        {/* Outfit suggestions */}
+        {/* Occasion-Based Outfit suggestions */}
         <section>
-          <h2 className="font-display text-xl font-semibold text-foreground mb-4">More Suggestions</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-xl font-semibold text-foreground">Style by Occasion</h2>
+            <Button variant="ghost" size="sm">
+              See all <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
           <div className="space-y-3">
             {outfitSuggestions.map((outfit) => (
               <div 
@@ -118,10 +150,12 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
                 className="bg-card rounded-2xl p-4 shadow-soft flex items-center gap-4 cursor-pointer hover:shadow-medium transition-shadow"
                 onClick={() => onNavigate("tryon")}
               >
-                <div className="w-16 h-16 bg-secondary rounded-xl" />
+                <div className="w-16 h-16 bg-secondary rounded-xl flex items-center justify-center">
+                  <Shirt className="w-6 h-6 text-muted-foreground" />
+                </div>
                 <div className="flex-1">
                   <h3 className="font-medium text-foreground">{outfit.occasion}</h3>
-                  <p className="text-sm text-muted-foreground">{outfit.weather}</p>
+                  <p className="text-sm text-muted-foreground">{outfit.style}</p>
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {outfit.items} items
@@ -150,31 +184,6 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
         </section>
       </div>
 
-      {/* Bottom navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-card/90 backdrop-blur-lg border-t border-border">
-        <div className="container flex items-center justify-around py-3">
-          {[
-            { icon: Sparkles, label: "Home", active: true },
-            { icon: Shirt, label: "Wardrobe", active: false },
-            { icon: Camera, label: "Try On", active: false },
-            { icon: Leaf, label: "Impact", active: false },
-          ].map((item) => (
-            <button
-              key={item.label}
-              onClick={() => {
-                if (item.label === "Try On") onNavigate("tryon");
-                else if (item.label === "Wardrobe") onNavigate("wardrobe");
-              }}
-              className={`flex flex-col items-center gap-1 px-4 py-2 ${
-                item.active ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <item.icon className="w-6 h-6" />
-              <span className="text-xs font-medium">{item.label}</span>
-            </button>
-          ))}
-        </div>
-      </nav>
     </div>
   );
 };
