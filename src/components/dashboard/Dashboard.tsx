@@ -4,29 +4,30 @@ import {
   Shirt, 
   Camera, 
   Leaf, 
-  Calendar, 
   TrendingUp, 
-  Plus,
   Sun,
-  Cloud,
-  CloudRain,
   Thermometer,
   ChevronRight,
-  Wind
+  Wind,
+  Wand2,
+  BookOpen,
+  BarChart3
 } from "lucide-react";
 import wardrobeImage from "@/assets/wardrobe-preview.jpg";
 
-const quickActions = [
-  { icon: Camera, label: "Try On", color: "bg-primary/10 text-primary" },
-  { icon: Shirt, label: "Wardrobe", color: "bg-accent/10 text-accent" },
-  { icon: Calendar, label: "Plan Week", color: "bg-green-100/80 text-green-700" },
-  { icon: Plus, label: "Add Clothes", color: "bg-secondary text-foreground" },
+const dashboardSections = [
+  { id: "wardrobe", icon: Shirt, label: "My Wardrobe", color: "bg-primary/10 text-primary" },
+  { id: "generator", icon: Wand2, label: "AI Outfit Generator", color: "bg-accent/10 text-accent" },
+  { id: "tryon", icon: Camera, label: "Try-On Studio", color: "bg-green-100/80 text-green-700" },
+  { id: "weather", icon: Sun, label: "Weather Styling", color: "bg-amber-100/80 text-amber-700" },
+  { id: "learning", icon: BookOpen, label: "Upcycling & Learning", color: "bg-secondary text-foreground" },
+  { id: "impact", icon: BarChart3, label: "Sustainability Impact", color: "bg-green-100/80 text-green-700" },
 ];
 
 const outfitSuggestions = [
-  { id: 1, occasion: "Work Meeting", style: "Business casual", items: 4 },
-  { id: 2, occasion: "Weekend Brunch", style: "Relaxed chic", items: 3 },
-  { id: 3, occasion: "Date Night", style: "Elegant", items: 3 },
+  { id: 1, occasion: "Everyday Wear", style: "Comfortable and stylish", items: 3 },
+  { id: 2, occasion: "Event Styling", style: "Elegant occasion look", items: 4 },
+  { id: 3, occasion: "Trend-Inspired", style: "Current fashion trends", items: 3 },
 ];
 
 // Weather-aware styling data
@@ -34,7 +35,7 @@ const weatherData = {
   temp: 28,
   condition: "sunny",
   humidity: 45,
-  recommendation: "It's 28°C and sunny — here's a breathable outfit from your wardrobe."
+  recommendation: "Based on today's weather, here's a comfortable and stylish option from your closet."
 };
 
 interface DashboardProps {
@@ -66,7 +67,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium text-primary uppercase tracking-wide">AI Styling Radar</span>
+                  <span className="text-xs font-medium text-primary uppercase tracking-wide">Weather Styling Radar</span>
                 </div>
                 <p className="font-display text-lg font-medium text-foreground leading-snug">
                   {weatherData.recommendation}
@@ -88,18 +89,24 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
       </header>
 
       <div className="container px-4 space-y-8">
-        {/* Quick actions */}
-        <div className="grid grid-cols-4 gap-3">
-          {quickActions.map((action) => (
+        {/* Dashboard sections grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {dashboardSections.map((section) => (
             <button
-              key={action.label}
-              onClick={() => action.label === "Try On" ? onNavigate("tryon") : action.label === "Wardrobe" && onNavigate("wardrobe")}
+              key={section.id}
+              onClick={() => {
+                if (section.id === "wardrobe") onNavigate("wardrobe");
+                else if (section.id === "tryon" || section.id === "generator") onNavigate("tryon");
+                else if (section.id === "learning") onNavigate("learning");
+                else if (section.id === "weather") onNavigate("dashboard");
+                else if (section.id === "impact") onNavigate("dashboard");
+              }}
               className="flex flex-col items-center gap-2 p-4 bg-card rounded-2xl shadow-soft hover:shadow-medium transition-shadow"
             >
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${action.color}`}>
-                <action.icon className="w-6 h-6" />
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${section.color}`}>
+                <section.icon className="w-6 h-6" />
               </div>
-              <span className="text-sm font-medium text-foreground">{action.label}</span>
+              <span className="text-sm font-medium text-foreground text-center">{section.label}</span>
             </button>
           ))}
         </div>
@@ -135,12 +142,12 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
           </div>
         </section>
 
-        {/* Occasion-Based Outfit suggestions */}
+        {/* AI Outfit Generator */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display text-xl font-semibold text-foreground">Style by Occasion</h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">AI Outfit Generator</h2>
             <Button variant="ghost" size="sm">
-              See all <ChevronRight className="w-4 h-4 ml-1" />
+              Generate <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           </div>
           <div className="space-y-3">
@@ -166,20 +173,34 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
           </div>
         </section>
 
-        {/* Sustainability stats */}
+        {/* Sustainability Impact */}
         <section>
-          <h2 className="font-display text-xl font-semibold text-foreground mb-4">Your Impact</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <h2 className="font-display text-xl font-semibold text-foreground mb-4">Sustainability Impact</h2>
+          <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="bg-green-50 rounded-2xl p-4">
               <Leaf className="w-6 h-6 text-green-600 mb-2" />
-              <p className="font-display text-2xl font-bold text-green-800">12</p>
-              <p className="text-sm text-green-700">Outfits created this week</p>
+              <p className="font-display text-2xl font-bold text-green-800">8</p>
+              <p className="text-sm text-green-700">Items saved from landfill</p>
             </div>
             <div className="bg-amber-50 rounded-2xl p-4">
               <TrendingUp className="w-6 h-6 text-amber-600 mb-2" />
               <p className="font-display text-2xl font-bold text-amber-800">85%</p>
               <p className="text-sm text-amber-700">Wardrobe utilization</p>
             </div>
+          </div>
+          
+          {/* Cost per wear */}
+          <div className="bg-card rounded-2xl p-4 shadow-soft border border-border/50">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-sm font-medium text-foreground">Sustainability Score</span>
+              <span className="text-sm font-semibold text-green-600">Great</span>
+            </div>
+            <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style={{ width: '78%' }} />
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              Extending the life of clothes reduces carbon, water use, and textile waste.
+            </p>
           </div>
         </section>
       </div>

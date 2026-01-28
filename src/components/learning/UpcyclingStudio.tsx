@@ -16,62 +16,62 @@ interface Tutorial {
 const tutorials: Tutorial[] = [
   {
     id: "1",
-    title: "Oxfam Raw-Edge Denim Shorts",
-    difficulty: "Easy",
-    time: "10m",
-    icon: "👖",
+    title: "Denim to Tote",
+    difficulty: "Medium",
+    time: "45m",
+    icon: "👜",
     steps: [
-      "Lay jeans flat and mark desired length.",
-      "Cut one leg at a time.",
-      "Leave edges raw and frayed."
+      "Cut legs off old jeans.",
+      "Turn inside out and sew bottom edge.",
+      "Use excess fabric for straps."
     ]
   },
   {
     id: "2",
-    title: "Oxfam No-Sew Tie-Front Crop",
+    title: "T-Shirt to Crop Top",
     difficulty: "Easy",
     time: "15m",
     icon: "👕",
     steps: [
-      "Mark waistline.",
-      "Cut across the back only.",
-      "Split front and tie."
+      "Lay flat.",
+      "Measure to waist.",
+      "Cut straight across (no-sew)."
     ]
   },
   {
     id: "3",
-    title: "Oxfam T-Shirt Fringe Tote",
-    difficulty: "Medium",
-    time: "20m",
-    icon: "👜",
+    title: "Sweater to Mittens",
+    difficulty: "Easy",
+    time: "30m",
+    icon: "🧤",
     steps: [
-      "Cut sleeves and neckline.",
-      "Create fringe slits.",
-      "Tie fringe together."
+      "Trace hand on sweater.",
+      "Cut slightly outside outline.",
+      "Stitch edges together."
     ]
   },
   {
     id: "4",
-    title: "Oxfam Maxi-to-Skirt",
+    title: "Dress to Two-Piece Set",
     difficulty: "Advanced",
-    time: "45m",
+    time: "60m",
     icon: "👗",
     steps: [
       "Cut at waistline.",
-      "Sew channel.",
-      "Insert elastic."
+      "Hem the top.",
+      "Add elastic to skirt waistband."
     ]
   },
   {
     id: "5",
-    title: "Oxfam Menswear Shirt-Dress",
-    difficulty: "Advanced",
-    time: "60m",
-    icon: "👔",
+    title: "Silk Scarf to Halter Top",
+    difficulty: "Easy",
+    time: "10m",
+    icon: "🧣",
     steps: [
-      "Remove sleeves.",
-      "Cinch waist.",
-      "Hem length."
+      "Fold scarf into a triangle.",
+      "Tie around neck.",
+      "Tie ends around waist."
     ]
   }
 ];
@@ -227,7 +227,7 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
                 <Sparkles className="w-8 h-8 text-green-600" />
               </div>
               <h3 className="font-display text-2xl font-semibold text-foreground mb-2">
-                Project Completed!
+                Circular Win 🌱
               </h3>
               <p className="text-muted-foreground mb-6">
                 Amazing work! You've given new life to an old piece.
