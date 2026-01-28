@@ -25,7 +25,7 @@ const CTA = ({ onGetStarted }: CTAProps) => {
             </h2>
             
             <p className="text-lg text-background/70 mb-8 max-w-xl mx-auto">
-              Join thousands of fashion-forward individuals who are already discovering their perfect style with Luvia AI.
+              Join thousands of fashion-forward individuals who are already discovering their perfect style with Rewear AI.
             </p>
             
             <Button 
