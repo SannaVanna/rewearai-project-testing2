@@ -9,13 +9,14 @@ import AuthModal from "@/components/auth/AuthModal";
 import StylePreferences from "@/components/onboarding/StylePreferences";
 import WardrobeUpload from "@/components/wardrobe/WardrobeUpload";
 import WardrobePage from "@/components/wardrobe/WardrobePage";
+import WardrobeEntryPrompt from "@/components/wardrobe/WardrobeEntryPrompt";
 import VirtualTryOn from "@/components/tryon/VirtualTryOn";
 import Dashboard from "@/components/dashboard/Dashboard";
 import UpcyclingStudio from "@/components/learning/UpcyclingStudio";
 import ProfilePage from "@/components/profile/ProfilePage";
 import MainNav from "@/components/layout/MainNav";
 
-type Screen = "landing" | "onboarding" | "wardrobe-upload" | "wardrobe" | "tryon" | "dashboard" | "learning" | "profile";
+type Screen = "landing" | "onboarding" | "wardrobe-upload" | "wardrobe" | "wardrobe-entry" | "tryon" | "dashboard" | "learning" | "profile";
 
 const AUTH_STORAGE_KEY = "rewear_auth_state";
 
@@ -32,6 +33,9 @@ const Index = () => {
   });
   
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [hasUploadedWardrobe, setHasUploadedWardrobe] = useState(() => {
+    return localStorage.getItem("rewear_wardrobe_initialized") === "true";
+  });
 
   // Persist auth state
   useEffect(() => {
@@ -54,15 +58,32 @@ const Index = () => {
   };
 
   const handleWardrobeComplete = () => {
+    localStorage.setItem("rewear_wardrobe_initialized", "true");
+    setHasUploadedWardrobe(true);
     setCurrentScreen("dashboard");
   };
 
   const handleNavigate = (screen: string) => {
+    // If going to Try-On and user hasn't set up wardrobe yet, show entry prompt
+    if (screen === "tryon" && !hasUploadedWardrobe) {
+      setCurrentScreen("wardrobe-entry");
+      return;
+    }
     setCurrentScreen(screen as Screen);
   };
 
+  const handleWardrobeEntryUpload = () => {
+    setCurrentScreen("wardrobe");
+  };
+
+  const handleWardrobeEntrySkip = () => {
+    localStorage.setItem("rewear_wardrobe_initialized", "true");
+    setHasUploadedWardrobe(true);
+    setCurrentScreen("tryon");
+  };
+
   // Show navigation for logged-in screens
-  const showMainNav = isLoggedIn && !["onboarding", "wardrobe-upload"].includes(currentScreen);
+  const showMainNav = isLoggedIn && !["onboarding", "wardrobe-upload", "wardrobe-entry"].includes(currentScreen);
 
   // Render based on current screen
   if (currentScreen === "onboarding") {
@@ -71,6 +92,10 @@ const Index = () => {
 
   if (currentScreen === "wardrobe-upload") {
     return <WardrobeUpload onComplete={handleWardrobeComplete} />;
+  }
+
+  if (currentScreen === "wardrobe-entry") {
+    return <WardrobeEntryPrompt onUploadNew={handleWardrobeEntryUpload} onUseExisting={handleWardrobeEntrySkip} />;
   }
 
   if (currentScreen === "tryon") {
