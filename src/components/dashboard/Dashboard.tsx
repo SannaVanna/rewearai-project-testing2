@@ -14,7 +14,8 @@ import {
   Heart,
   Recycle,
   BarChart3,
-  MessageCircle
+  MessageCircle,
+  CalendarDays
 } from "lucide-react";
 import wardrobeImage from "@/assets/wardrobe-preview.jpg";
 import SDGBadge from "@/components/sustainability/SDGBadge";
@@ -22,13 +23,14 @@ import ImpactTracker from "@/components/sustainability/ImpactTracker";
 import DonationHub from "@/components/sustainability/DonationHub";
 import FavoriteOutfits from "@/components/wardrobe/FavoriteOutfits";
 import AIAssistant from "@/components/assistant/AIAssistant";
+import OutfitPlanner from "@/components/planner/OutfitPlanner";
 
 // Quick action buttons for AI Stylist section
 const aiStylistActions = [
   { id: "tryon", icon: Camera, label: "Try-On", color: "bg-primary/10 text-primary" },
   { id: "generator", icon: Wand2, label: "Get Styled", color: "bg-accent/10 text-accent" },
   { id: "wardrobe", icon: Shirt, label: "Wardrobe", color: "bg-secondary text-foreground" },
-  { id: "assistant", icon: MessageCircle, label: "AI Tips", color: "bg-primary/10 text-primary" },
+  { id: "planner", icon: CalendarDays, label: "Planner", color: "bg-primary/10 text-primary" },
 ];
 
 // Quick actions for Sustainability Hub
@@ -60,6 +62,7 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [impactModalOpen, setImpactModalOpen] = useState(false);
   const [assistantModalOpen, setAssistantModalOpen] = useState(false);
+  const [plannerModalOpen, setPlannerModalOpen] = useState(false);
 
   const handleQuickAction = (actionId: string) => {
     if (actionId === "donate") {
@@ -68,6 +71,8 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
       setImpactModalOpen(true);
     } else if (actionId === "assistant") {
       setAssistantModalOpen(true);
+    } else if (actionId === "planner") {
+      setPlannerModalOpen(true);
     } else if (actionId === "learning" || actionId === "upcycle") {
       onNavigate("learning");
     } else if (actionId === "tryon" || actionId === "generator") {
@@ -331,6 +336,12 @@ const Dashboard = ({ onNavigate }: DashboardProps) => {
           <AIAssistant onClose={() => setAssistantModalOpen(false)} />
         </DialogContent>
       </Dialog>
+
+      {/* Outfit Planner Modal */}
+      <OutfitPlanner 
+        isOpen={plannerModalOpen} 
+        onClose={() => setPlannerModalOpen(false)} 
+      />
     </div>
   );
 };
