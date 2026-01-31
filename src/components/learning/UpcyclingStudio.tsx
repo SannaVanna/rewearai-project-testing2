@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Leaf, Clock, Sparkles, Check, ChevronRight, ArrowLeft, Lightbulb } from "lucide-react";
+import { Leaf, Clock, Sparkles, Check, ChevronRight, ArrowLeft, Lightbulb, Play, ExternalLink } from "lucide-react";
 import confetti from "canvas-confetti";
 
 interface Tutorial {
@@ -9,17 +9,20 @@ interface Tutorial {
   title: string;
   difficulty: "Easy" | "Medium" | "Advanced";
   time: string;
-  icon: string;
+  videoId: string;
+  videoTitle: string;
   steps: string[];
 }
 
+// Real YouTube upcycling videos
 const tutorials: Tutorial[] = [
   {
     id: "1",
     title: "Raw-Edge Denim Shorts",
     difficulty: "Easy",
     time: "10m",
-    icon: "👖",
+    videoId: "cTQzTqgYqzg",
+    videoTitle: "DIY Denim Shorts from Old Jeans",
     steps: [
       "Lay jeans flat and mark desired length.",
       "Cut straight across both legs.",
@@ -31,7 +34,8 @@ const tutorials: Tutorial[] = [
     title: "No-Sew Tie-Front Crop",
     difficulty: "Easy",
     time: "15m",
-    icon: "👕",
+    videoId: "qY7s3O9kQR4",
+    videoTitle: "No-Sew T-Shirt Transformation",
     steps: [
       "Cut t-shirt to desired crop length.",
       "Cut vertical slits along the bottom hem.",
@@ -43,7 +47,8 @@ const tutorials: Tutorial[] = [
     title: "T-Shirt Fringe Tote",
     difficulty: "Medium",
     time: "20m",
-    icon: "👜",
+    videoId: "KYUqPExAsjE",
+    videoTitle: "DIY T-Shirt Tote Bag Tutorial",
     steps: [
       "Cut sleeves and neckline off the t-shirt.",
       "Turn inside out and cut fringe along the bottom.",
@@ -56,7 +61,8 @@ const tutorials: Tutorial[] = [
     title: "Maxi-to-Skirt",
     difficulty: "Advanced",
     time: "45m",
-    icon: "👗",
+    videoId: "H5BqFTVG_hI",
+    videoTitle: "Transform a Maxi Dress into a Skirt",
     steps: [
       "Lay maxi dress flat and mark where you want the skirt to start.",
       "Cut off the top portion carefully.",
@@ -70,7 +76,8 @@ const tutorials: Tutorial[] = [
     title: "Menswear Shirt-Dress",
     difficulty: "Advanced",
     time: "60m",
-    icon: "👔",
+    videoId: "VHwrHG8mTrw",
+    videoTitle: "Turn a Men's Shirt into a Dress",
     steps: [
       "Select an oversized men's button-down shirt.",
       "Try on and mark desired dress length.",
@@ -107,6 +114,7 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [projectCompleted, setProjectCompleted] = useState(false);
   const [dailyTip, setDailyTip] = useState("");
+  const [showVideo, setShowVideo] = useState(false);
 
   // Set daily tip based on day of year for consistency
   useEffect(() => {
@@ -136,6 +144,7 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
     setSelectedTutorial(null);
     setCompletedSteps([]);
     setProjectCompleted(false);
+    setShowVideo(false);
   };
 
   const allStepsCompleted = selectedTutorial && 
@@ -187,21 +196,32 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
         </div>
       </div>
 
-      {/* Tutorial Cards */}
+      {/* Tutorial Cards with Video Thumbnails */}
       <div className="container max-w-4xl px-4 pb-16">
         <div className="grid gap-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
           {tutorials.map((tutorial, index) => (
             <button
               key={tutorial.id}
               onClick={() => setSelectedTutorial(tutorial)}
-              className="group bg-card rounded-2xl p-5 shadow-soft hover:shadow-medium transition-all text-left flex items-center gap-4"
+              className="group bg-card rounded-2xl p-4 shadow-soft hover:shadow-medium transition-all text-left flex items-center gap-4"
               style={{ animationDelay: `${0.1 + index * 0.05}s` }}
             >
-              <div className="w-14 h-14 bg-secondary rounded-xl flex items-center justify-center text-2xl shrink-0">
-                {tutorial.icon}
+              {/* Video Thumbnail */}
+              <div className="relative w-24 h-16 md:w-32 md:h-20 rounded-xl overflow-hidden shrink-0 bg-secondary">
+                <img
+                  src={`https://img.youtube.com/vi/${tutorial.videoId}/mqdefault.jpg`}
+                  alt={tutorial.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
+                  <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center">
+                    <Play className="w-4 h-4 text-foreground ml-0.5" />
+                  </div>
+                </div>
               </div>
+              
               <div className="flex-1 min-w-0">
-                <h3 className="font-display text-lg font-semibold text-foreground mb-2 truncate">
+                <h3 className="font-display text-base md:text-lg font-semibold text-foreground mb-2 truncate">
                   {tutorial.title}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -235,14 +255,11 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
         </div>
       </div>
 
-      {/* Tutorial Modal */}
+      {/* Tutorial Modal with Video */}
       <Dialog open={!!selectedTutorial} onOpenChange={handleCloseModal}>
-        <DialogContent className="sm:max-w-md rounded-3xl">
+        <DialogContent className="sm:max-w-lg rounded-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center text-xl">
-                {selectedTutorial?.icon}
-              </div>
               <div>
                 <DialogTitle className="font-display text-xl font-semibold text-foreground text-left">
                   {selectedTutorial?.title}
@@ -278,7 +295,59 @@ const UpcyclingStudio = ({ onBack }: UpcyclingStudioProps) => {
             </div>
           ) : (
             <>
+              {/* Embedded YouTube Video */}
+              <div className="mb-4">
+                {showVideo ? (
+                  <div className="aspect-video rounded-xl overflow-hidden bg-black">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${selectedTutorial?.videoId}?autoplay=1`}
+                      title={selectedTutorial?.videoTitle}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowVideo(true)}
+                    className="relative w-full aspect-video rounded-xl overflow-hidden bg-secondary group"
+                  >
+                    <img
+                      src={`https://img.youtube.com/vi/${selectedTutorial?.videoId}/maxresdefault.jpg`}
+                      alt={selectedTutorial?.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Fallback to medium quality if max doesn't exist
+                        (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${selectedTutorial?.videoId}/mqdefault.jpg`;
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition-colors">
+                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                        <Play className="w-8 h-8 text-foreground ml-1" />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-3 left-3 right-3 text-left">
+                      <p className="text-white text-sm font-medium drop-shadow-lg">
+                        {selectedTutorial?.videoTitle}
+                      </p>
+                    </div>
+                  </button>
+                )}
+                
+                {/* External YouTube link */}
+                <a
+                  href={`https://www.youtube.com/watch?v=${selectedTutorial?.videoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground mt-2 transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Watch on YouTube
+                </a>
+              </div>
+
               <div className="space-y-3 my-4">
+                <p className="text-sm font-medium text-foreground">Step-by-step guide:</p>
                 {selectedTutorial?.steps.map((step, index) => (
                   <button
                     key={index}

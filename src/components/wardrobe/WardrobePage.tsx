@@ -22,14 +22,14 @@ interface WardrobeItem {
   name?: string;
 }
 
-// Sample wardrobe items for demonstration
+// Sample wardrobe items with real fashion images
 const sampleItems: WardrobeItem[] = [
-  { id: "1", preview: "", category: "tops", name: "White Linen Shirt" },
-  { id: "2", preview: "", category: "bottoms", name: "High-Waist Jeans" },
-  { id: "3", preview: "", category: "dresses", name: "Floral Midi Dress" },
-  { id: "4", preview: "", category: "outerwear", name: "Beige Trench Coat" },
-  { id: "5", preview: "", category: "shoes", name: "White Sneakers" },
-  { id: "6", preview: "", category: "tops", name: "Navy Cashmere Sweater" },
+  { id: "1", preview: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=300&h=300&fit=crop", category: "tops", name: "White Linen Shirt" },
+  { id: "2", preview: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300&h=300&fit=crop", category: "bottoms", name: "High-Waist Jeans" },
+  { id: "3", preview: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=300&fit=crop", category: "dresses", name: "Floral Midi Dress" },
+  { id: "4", preview: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&h=300&fit=crop", category: "outerwear", name: "Beige Trench Coat" },
+  { id: "5", preview: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop", category: "shoes", name: "White Sneakers" },
+  { id: "6", preview: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300&h=300&fit=crop", category: "tops", name: "Navy Cashmere Sweater" },
 ];
 
 const WardrobePage = ({ onNavigate }: WardrobePageProps) => {
